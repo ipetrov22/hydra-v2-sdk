@@ -21,7 +21,7 @@ export const computePairAddress = ({
     factoryAddress,
     keccak256(['bytes'], [pack(['address', 'address'], [token0.address, token1.address])]),
     INIT_CODE_HASH
-  )
+  ).toLowerCase()
 }
 export class Pair {
   public readonly liquidityToken: Token
@@ -38,9 +38,9 @@ export class Pair {
     this.liquidityToken = new Token(
       tokenAmounts[0].currency.chainId,
       Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
-      18,
-      'UNI-V2',
-      'Uniswap V2'
+      8,
+      'HYD',
+      'Hydraswap'
     )
     this.tokenAmounts = tokenAmounts as [CurrencyAmount<Token>, CurrencyAmount<Token>]
   }

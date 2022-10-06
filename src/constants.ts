@@ -1,14 +1,18 @@
 import JSBI from 'jsbi'
 
-export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+export const FACTORY_ADDRESS = '0x5a2a927bea6c5f4a48d4e0116049c1e36d52a528'
 
-export const INIT_CODE_HASH = '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f'
+export const INIT_CODE_HASH = '0x8bd2e44ddacff4efbf1f9ead74bd191fe945f9824cae3109bfc068d82a3cb3d1'
 
 export const MINIMUM_LIQUIDITY = JSBI.BigInt(1000)
 
 // exports for internal consumption
 export const ZERO = JSBI.BigInt(0)
 export const ONE = JSBI.BigInt(1)
+export const TWO = JSBI.BigInt(2)
+export const THREE = JSBI.BigInt(3)
 export const FIVE = JSBI.BigInt(5)
+export const TEN = JSBI.BigInt(10)
+export const _100 = JSBI.BigInt(100)
 export const _997 = JSBI.BigInt(997)
 export const _1000 = JSBI.BigInt(1000)
