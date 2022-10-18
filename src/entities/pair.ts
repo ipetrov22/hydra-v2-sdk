@@ -51,7 +51,7 @@ export class Pair {
       : [tokenAmountB, currencyAmountA]
     this.liquidityToken = new Token(
       tokenAmounts[0].currency.chainId,
-      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
+      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency, tokenAmounts[0].currency.chainId),
       8,
       'HYD',
       'Hydraswap'
