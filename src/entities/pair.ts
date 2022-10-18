@@ -4,31 +4,45 @@ import JSBI from 'jsbi'
 import { pack, keccak256 } from '@ethersproject/solidity'
 import { getCreate2Address } from '@ethersproject/address'
 
-import { FACTORY_ADDRESS, INIT_CODE_HASH, MINIMUM_LIQUIDITY, FIVE, _997, _1000, ONE, ZERO } from '../constants'
+import {
+  MAINNET_INIT_CODE_HASH,
+  TESTNET_INIT_CODE_HASH,
+  MINIMUM_LIQUIDITY,
+  FIVE,
+  _997,
+  _1000,
+  ONE,
+  ZERO,
+  TESTNET_V2_FACTORY,
+  MAINNET_V2_FACTORY
+} from '../constants'
 import { InsufficientReservesError, InsufficientInputAmountError } from '../errors'
 
 export const computePairAddress = ({
   factoryAddress,
   tokenA,
-  tokenB
+  tokenB,
+  chainId
 }: {
   factoryAddress: string
   tokenA: Token
   tokenB: Token
+  chainId?: number
 }): string => {
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
   return getCreate2Address(
     factoryAddress,
     keccak256(['bytes'], [pack(['address', 'address'], [token0.address, token1.address])]),
-    INIT_CODE_HASH
+    chainId === 2 ? TESTNET_INIT_CODE_HASH : MAINNET_INIT_CODE_HASH
   ).toLowerCase()
 }
 export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: [CurrencyAmount<Token>, CurrencyAmount<Token>]
 
-  public static getAddress(tokenA: Token, tokenB: Token): string {
-    return computePairAddress({ factoryAddress: FACTORY_ADDRESS, tokenA, tokenB })
+  public static getAddress(tokenA: Token, tokenB: Token, chainId?: number): string {
+    const FACTORY_ADDRESS = chainId === 2 ? TESTNET_V2_FACTORY : MAINNET_V2_FACTORY
+    return computePairAddress({ factoryAddress: FACTORY_ADDRESS, tokenA, tokenB, chainId })
   }
 
   public constructor(currencyAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>) {
